@@ -1,0 +1,26 @@
+schedule:
+  timezone: Pacific/Auckland
+  window_start: "01:00"
+  window_end: "06:00"
+
+apt_cacher_ng:
+  url: http://192.168.254.254:3142
+  extras_dir: /config/acng-extras
+  matrix:
+    - ubuntu:jammy:amd64
+    - ubuntu:jammy:arm64
+    - ubuntu:noble:amd64
+    - ubuntu:noble:arm64
+    - ubuntu:resolute:amd64
+    - ubuntu:resolute:arm64
+    - debian:bookworm:amd64
+    - debian:bookworm:arm64
+    - debian:bookworm:armhf
+    - raspios:bookworm:armhf
+    - raspios:bookworm:arm64
+    - raspios:trixie:arm64
+
+proxpi:
+  url: http://192.168.254.254:5001
+  cache_dir: /var/cache/proxpi
+  workers: 8

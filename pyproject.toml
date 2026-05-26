@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cache-warmer"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "packaging>=24.0",
+    "pyyaml>=6.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["cache_warmer*"]
+
+[tool.black]
+target-version = ["py312"]
+
+[tool.pylint.messages_control]
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-few-public-methods",
+    "broad-exception-caught",
+    "line-too-long",
+    "protected-access",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "too-many-branches",
+    "too-many-locals",
+    "too-many-nested-blocks",
+    "unsubscriptable-object",
+    "use-implicit-booleaness-not-comparison",
+]
+
+[tool.pylint.format]
+max-line-length = 88
