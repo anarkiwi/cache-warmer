@@ -24,3 +24,7 @@ proxpi:
   url: http://192.168.254.254:5001
   cache_dir: /var/cache/proxpi
   workers: 8
+
+docker_registry:
+  url: http://192.168.254.254:5000
+  cache_dir: /var/lib/registry

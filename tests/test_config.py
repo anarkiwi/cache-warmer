@@ -47,3 +47,26 @@ def test_load_config_defaults(tmp_path):
     assert not cfg.apt_cacher_ng.matrix
     assert cfg.apt_cacher_ng.extras_dir == "/config/acng-extras"
     assert cfg.proxpi.workers == 8
+    assert cfg.docker_registry is None
+
+
+def test_load_config_docker_registry(tmp_path):
+    cfg_file = tmp_path / "config.yaml"
+    cfg_file.write_text(
+        "schedule:\n"
+        "  timezone: UTC\n"
+        "  window_start: '02:00'\n"
+        "  window_end: '04:00'\n"
+        "apt_cacher_ng:\n"
+        "  url: http://proxy:3142\n"
+        "proxpi:\n"
+        "  url: http://proxy:5001\n"
+        "  cache_dir: /tmp/proxpi\n"
+        "docker_registry:\n"
+        "  url: http://registry:5000\n"
+        "  cache_dir: /var/lib/registry\n"
+    )
+    cfg = config.load(str(cfg_file))
+    assert cfg.docker_registry is not None
+    assert cfg.docker_registry.url == "http://registry:5000"
+    assert cfg.docker_registry.cache_dir == "/var/lib/registry"

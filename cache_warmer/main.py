@@ -1,7 +1,7 @@
 import logging
 import os
 
-from cache_warmer import acng, config, proxpi, scheduler
+from cache_warmer import acng, config, proxpi, registry, scheduler
 
 logging.basicConfig(
     level=logging.INFO,
@@ -31,6 +31,11 @@ def main() -> None:  # pragma: no cover
         logger.info("starting proxpi warm")
         proxpi.run(cfg)
         logger.info("proxpi done")
+
+        if cfg.docker_registry:
+            logger.info("starting docker registry warm")
+            registry.run(cfg)
+            logger.info("docker registry done")
 
 
 if __name__ == "__main__":

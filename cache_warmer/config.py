@@ -25,10 +25,17 @@ class ProxpiConfig:
 
 
 @dataclasses.dataclass
+class DockerRegistryConfig:
+    url: str
+    cache_dir: str
+
+
+@dataclasses.dataclass
 class Config:
     schedule: ScheduleConfig
     apt_cacher_ng: AcngConfig
     proxpi: ProxpiConfig
+    docker_registry: DockerRegistryConfig | None = None
 
 
 def load(path: str) -> Config:
@@ -37,6 +44,7 @@ def load(path: str) -> Config:
     sched = data["schedule"]
     acng = data["apt_cacher_ng"]
     prox = data["proxpi"]
+    dr = data.get("docker_registry")
     return Config(
         schedule=ScheduleConfig(
             timezone=sched["timezone"],
@@ -52,5 +60,13 @@ def load(path: str) -> Config:
             url=prox["url"],
             cache_dir=prox["cache_dir"],
             workers=prox.get("workers", 8),
+        ),
+        docker_registry=(
+            DockerRegistryConfig(
+                url=dr["url"],
+                cache_dir=dr["cache_dir"],
+            )
+            if dr
+            else None
         ),
     )
